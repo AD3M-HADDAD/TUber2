@@ -9,6 +9,7 @@ import eniso.gte2.tuber.databinding.ActivityEmailRequestBinding
 
 import android.util.Log
 import android.widget.EditText
+import androidx.appcompat.app.ActionBar
 import eniso.gte2.tuber.databinding.ActivityNumberRequestBinding
 import java.util.regex.Pattern
 
@@ -16,13 +17,17 @@ class Email_Request : AppCompatActivity() {
     private lateinit var editText: EditText
     private lateinit var email: String
     private val emailPattern = "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
-    "\\@" +
-    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
-    "\\." +
-    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}"
+            "\\@" +
+            "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+            "(" +
+            "\\." +
+            "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+            ")+"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val actionBar: ActionBar? = supportActionBar
+        actionBar?.hide()
         val binding = ActivityEmailRequestBinding.inflate(layoutInflater)
         setContentView(binding.root)
         editText = findViewById(R.id.editTextEmail)
@@ -30,16 +35,20 @@ class Email_Request : AppCompatActivity() {
         binding.button.setOnClickListener {
 
             binding.button.setBackgroundColor(Color.LTGRAY)
-//            if (email.matches(emailPattern.toRegex()))
-//            {
+            if (email.matches(emailPattern.toRegex()))
+           {
                 val int = Intent(this,Name_Request::class.java)
                 startActivity(int)
-//            }
+            }
 
-//            else {
-//                Toast.makeText(applicationContext, "Invalid email address",
-//                    Toast.LENGTH_SHORT).show()
-//            }
+            else {
+                Toast.makeText(applicationContext, "Invalid email address",
+                    Toast.LENGTH_SHORT).show()
+            }
+        }
+        binding.button2.setOnClickListener {
+            val int = Intent(this,Name_Request::class.java)
+            startActivity(int)
         }
     }
 }
